@@ -1,193 +1,328 @@
 import { useEffect, useRef } from "react";
+import * as THREE from "three";
 
-const land: Array<Array<[number, number]>> = [
-  [[70, -10], [66, 5], [62, 18], [58, 29], [54, 36], [52, 45], [58, 57], [61, 72], [57, 88], [51, 104], [45, 119], [38, 132], [28, 137], [20, 127], [16, 115], [8, 109], [10, 96], [18, 87], [20, 72], [27, 62], [33, 52], [37, 42], [45, 34], [49, 20], [57, 9], [62, -3]],
-  [[36, -11], [43, -2], [44, 10], [40, 18], [37, 28], [31, 33], [25, 35], [18, 41], [11, 43], [4, 50], [-4, 48], [-12, 43], [-20, 39], [-28, 33], [-35, 25], [-32, 15], [-25, 8], [-16, 3], [-7, -3], [2, -9], [13, -17], [25, -16]],
-  [[12, 43], [10, 51], [6, 55], [3, 49]],
-  [[56, -10], [61, -8], [62, -2], [58, 1], [55, -4]],
-  [[-12, 112], [-5, 115], [-7, 127], [-15, 132], [-22, 127], [-21, 117]],
-];
+const EARTH_TEXTURE = "/assets/earth-blue-marble.jpg";
+const FOCUS_LAT = 39.8;
+const FOCUS_LON = 46.8;
 
-function drawGlobe(canvas: HTMLCanvasElement, rotation: number, width: number, height: number, pulseActive = true) {
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = Math.round(width * dpr);
-  canvas.height = Math.round(height * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, width, height);
+function surfaceVector(latitude: number, longitude: number, radius = 1) {
+  const lat = THREE.MathUtils.degToRad(latitude);
+  const lon = THREE.MathUtils.degToRad(longitude);
+  return new THREE.Vector3(
+    Math.cos(lat) * Math.cos(lon),
+    Math.sin(lat),
+    -Math.cos(lat) * Math.sin(lon),
+  ).multiplyScalar(radius);
+}
 
-  const cx = width * 0.51;
-  const cy = height * 0.5;
-  const radius = Math.min(width * 0.42, height * 0.42);
-  const glow = ctx.createRadialGradient(cx - radius * 0.42, cy - radius * 0.5, radius * 0.04, cx, cy, radius * 1.36);
-  glow.addColorStop(0, "rgba(225, 194, 123, .10)");
-  glow.addColorStop(0.62, "rgba(33, 77, 62, .12)");
-  glow.addColorStop(1, "rgba(18, 40, 34, 0)");
-  ctx.fillStyle = glow;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius * 1.36, 0, Math.PI * 2);
-  ctx.fill();
+function makeHaloTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 128;
+  canvas.height = 128;
+  const context = canvas.getContext("2d");
+  if (!context) return null;
+  const gradient = context.createRadialGradient(64, 64, 2, 64, 64, 64);
+  gradient.addColorStop(0, "rgba(255, 224, 151, .95)");
+  gradient.addColorStop(0.12, "rgba(245, 198, 113, .55)");
+  gradient.addColorStop(0.5, "rgba(230, 170, 86, .12)");
+  gradient.addColorStop(1, "rgba(230, 170, 86, 0)");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, 128, 128);
+  return new THREE.CanvasTexture(canvas);
+}
 
-  const sphere = ctx.createRadialGradient(cx - radius * 0.38, cy - radius * 0.42, radius * 0.08, cx, cy, radius);
-  sphere.addColorStop(0, "#416e61");
-  sphere.addColorStop(0.53, "#23483f");
-  sphere.addColorStop(1, "#102820");
-  ctx.fillStyle = sphere;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius - 0.5, 0, Math.PI * 2);
-  ctx.clip();
-
-  const project = (lat: number, lon: number) => {
-    const phi = (lat * Math.PI) / 180;
-    const lambda = ((lon - rotation) * Math.PI) / 180;
-    const z = Math.cos(phi) * Math.cos(lambda);
-    if (z < -0.035) return null;
-    return { x: cx + radius * Math.cos(phi) * Math.sin(lambda), y: cy - radius * Math.sin(phi), z };
+function makeStarfield() {
+  const count = 420;
+  const positions = new Float32Array(count * 3);
+  const random = (seed: number) => {
+    const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+    return value - Math.floor(value);
   };
 
-  ctx.lineWidth = 0.65;
-  for (let lat = -60; lat <= 60; lat += 20) {
-    ctx.beginPath();
-    let started = false;
-    for (let lon = -180; lon <= 180; lon += 3) {
-      const point = project(lat, lon);
-      if (!point) { started = false; continue; }
-      if (!started) { ctx.moveTo(point.x, point.y); started = true; }
-      else ctx.lineTo(point.x, point.y);
-    }
-    ctx.strokeStyle = "rgba(217, 231, 212, .16)";
-    ctx.stroke();
-  }
-  for (let lon = -180; lon < 180; lon += 20) {
-    ctx.beginPath();
-    let started = false;
-    for (let lat = -88; lat <= 88; lat += 3) {
-      const point = project(lat, lon);
-      if (!point) { started = false; continue; }
-      if (!started) { ctx.moveTo(point.x, point.y); started = true; }
-      else ctx.lineTo(point.x, point.y);
-    }
-    ctx.strokeStyle = "rgba(217, 231, 212, .14)";
-    ctx.stroke();
+  for (let i = 0; i < count; i += 1) {
+    const longitude = random(i + 1) * Math.PI * 2;
+    const vertical = random(i + count + 7) * 2 - 1;
+    const horizontal = Math.sqrt(1 - vertical * vertical);
+    const radius = 6 + random(i + count * 2 + 13) * 3;
+    positions[i * 3] = Math.cos(longitude) * horizontal * radius;
+    positions[i * 3 + 1] = vertical * radius;
+    positions[i * 3 + 2] = Math.sin(longitude) * horizontal * radius;
   }
 
-  for (const polygon of land) {
-    ctx.beginPath();
-    let started = false;
-    let visibleCount = 0;
-    polygon.forEach(([lat, lon]) => {
-      const point = project(lat, lon);
-      if (!point) { started = false; return; }
-      if (!started) { ctx.moveTo(point.x, point.y); started = true; }
-      else ctx.lineTo(point.x, point.y);
-      visibleCount += 1;
-    });
-    if (visibleCount > 2) {
-      ctx.closePath();
-      ctx.fillStyle = "rgba(182, 192, 142, .34)";
-      ctx.fill();
-      ctx.strokeStyle = "rgba(220, 224, 184, .31)";
-      ctx.lineWidth = 1;
-      ctx.stroke();
-    }
-  }
-
-  const karabakh = project(39.8, 46.8);
-  if (karabakh) {
-    const pulse = pulseActive ? 0.5 + 0.5 * Math.sin(Date.now() / 390) : 0.5;
-    ctx.beginPath();
-    ctx.arc(karabakh.x, karabakh.y, 8 + pulse * 8, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(231, 190, 104, ${0.12 + pulse * 0.09})`;
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(karabakh.x, karabakh.y, 3.5, 0, Math.PI * 2);
-    ctx.fillStyle = "#f1cb79";
-    ctx.fill();
-    ctx.strokeStyle = "rgba(255, 241, 200, .9)";
-    ctx.lineWidth = 1.2;
-    ctx.stroke();
-  }
-
-  for (let i = 0; i < 38; i += 1) {
-    const x = cx + Math.sin(i * 71.7) * radius * 0.9;
-    const y = cy + Math.cos(i * 37.3) * radius * 0.88;
-    if (Math.hypot(x - cx, y - cy) < radius * 0.94) {
-      ctx.fillStyle = `rgba(238, 232, 193, ${0.18 + ((i % 4) * 0.08)})`;
-      ctx.beginPath();
-      ctx.arc(x, y, i % 7 === 0 ? 1.4 : 0.7, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-  ctx.restore();
-  ctx.strokeStyle = "rgba(226, 213, 164, .48)";
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-  ctx.stroke();
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  const material = new THREE.PointsMaterial({
+    color: 0xe8e2ce,
+    size: 0.018,
+    transparent: true,
+    opacity: 0.64,
+    sizeAttenuation: true,
+    depthWrite: false,
+  });
+  return { geometry, material, points: new THREE.Points(geometry, material) };
 }
 
 export default function GlobeCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const rotationRef = useRef(46.8);
-  const pointerRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });
+  const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const parent = canvas?.parentElement;
-    if (!canvas || !parent) return;
-    let frame = 0;
-    let width = 0;
-    let height = 0;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const resize = () => {
-      const rect = parent.getBoundingClientRect();
-      width = rect.width;
-      height = rect.height;
-      drawGlobe(canvas, rotationRef.current, width, height, !reduced);
-    };
-    const observer = new ResizeObserver(resize);
-    observer.observe(parent);
-    resize();
+    const mount = mountRef.current;
+    if (!mount) return;
 
-    const animate = () => {
-      if (!pointerRef.current.active) rotationRef.current += 0.012;
-      drawGlobe(canvas, rotationRef.current, width, height, true);
-      frame = window.requestAnimationFrame(animate);
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+    } catch {
+      mount.dataset.webglFallback = "true";
+      return;
+    }
+
+    delete mount.dataset.webglFallback;
+    mount.replaceChildren();
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(Math.max(mount.clientWidth, 1), Math.max(mount.clientHeight, 1), false);
+    renderer.setClearColor(0x000000, 0);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.18;
+    renderer.domElement.setAttribute("aria-hidden", "true");
+    renderer.domElement.style.touchAction = "none";
+    mount.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+    camera.position.copy(surfaceVector(FOCUS_LAT, FOCUS_LON, 3.34));
+    camera.lookAt(0, 0, 0);
+
+    const hemisphere = new THREE.HemisphereLight(0xe2efff, 0x10161d, 1.05);
+    scene.add(hemisphere);
+    const sun = new THREE.DirectionalLight(0xfff2d8, 3.2);
+    sun.position.set(3.2, 4.2, -4.5);
+    scene.add(sun);
+    const fill = new THREE.DirectionalLight(0x87b7ed, 0.38);
+    fill.position.set(-4, -1, 3);
+    scene.add(fill);
+
+    const stars = makeStarfield();
+    scene.add(stars.points);
+
+    const globe = new THREE.Group();
+    scene.add(globe);
+
+    const earthGeometry = new THREE.SphereGeometry(1, 96, 72);
+    const earthMaterial = new THREE.MeshStandardMaterial({
+      color: 0xf6f1e4,
+      roughness: 0.9,
+      metalness: 0.015,
+    });
+    const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+    earth.renderOrder = 1;
+    globe.add(earth);
+
+    const atmosphereGeometry = new THREE.SphereGeometry(1.045, 72, 56);
+    const atmosphereMaterial = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      vertexShader: `
+        varying vec3 vNormal;
+        varying vec3 vViewDirection;
+        void main() {
+          vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+          vNormal = normalize(normalMatrix * normal);
+          vViewDirection = normalize(-viewPosition.xyz);
+          gl_Position = projectionMatrix * viewPosition;
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vNormal;
+        varying vec3 vViewDirection;
+        void main() {
+          float rim = 1.0 - max(dot(normalize(vNormal), normalize(vViewDirection)), 0.0);
+          float glow = pow(rim, 3.1) * 0.48;
+          gl_FragColor = vec4(0.31, 0.62, 0.98, glow);
+        }
+      `,
+    });
+    const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+    atmosphere.renderOrder = 2;
+    globe.add(atmosphere);
+
+    const pin = new THREE.Group();
+    const pinPosition = surfaceVector(FOCUS_LAT, FOCUS_LON, 1.009);
+    const pinCore = new THREE.Mesh(
+      new THREE.SphereGeometry(0.018, 20, 16),
+      new THREE.MeshBasicMaterial({ color: 0xffd47c, toneMapped: false }),
+    );
+    pinCore.position.copy(pinPosition);
+    pin.add(pinCore);
+
+    const haloTexture = makeHaloTexture();
+    let haloMaterial: THREE.SpriteMaterial | null = null;
+    if (haloTexture) {
+      haloTexture.colorSpace = THREE.SRGBColorSpace;
+      haloMaterial = new THREE.SpriteMaterial({
+        map: haloTexture,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        toneMapped: false,
+      });
+      const halo = new THREE.Sprite(haloMaterial);
+      halo.position.copy(surfaceVector(FOCUS_LAT, FOCUS_LON, 1.025));
+      halo.scale.set(0.19, 0.19, 1);
+      pin.add(halo);
+    }
+    globe.add(pin);
+
+    const stage = mount.closest(".globe-stage");
+    const label = stage?.querySelector<HTMLElement>(".globe-tag") ?? null;
+    if (label) label.style.transition = "opacity 160ms ease";
+
+    const loader = new THREE.TextureLoader();
+    let earthTexture: THREE.Texture | null = null;
+    let disposed = false;
+    let autoRotateAngle = 0;
+
+    const render = () => {
+      renderer.render(scene, camera);
+
+      // Avtomatik yavaş döndürmə (sürüşdürülməyərkən)
+      if (!disposed) {
+        autoRotateAngle += 0.0015;
+        globe.rotation.y = autoRotateAngle;
+      }
+
+      if (!label) return;
+      const projected = pinPosition.clone().normalize().multiplyScalar(1.16).project(camera);
+      const width = mount.clientWidth;
+      const height = mount.clientHeight;
+      const visible = pinPosition.dot(camera.position) > 0
+        && projected.z > -1 && projected.z < 1
+        && Math.abs(projected.x) < 1.12 && Math.abs(projected.y) < 1.12;
+      const x = THREE.MathUtils.clamp((projected.x * 0.5 + 0.5) * width, 56, Math.max(56, width - 56));
+      const y = Math.max(18, (0.5 - projected.y * 0.5) * height - 24);
+      label.style.left = `${x}px`;
+      label.style.top = `${y}px`;
+      label.style.transform = "translate(-50%, -50%)";
+      label.style.opacity = visible ? "1" : "0";
     };
-    if (!reduced) frame = window.requestAnimationFrame(animate);
+
+    loader.load(
+      EARTH_TEXTURE,
+      (texture) => {
+        if (disposed) {
+          texture.dispose();
+          return;
+        }
+        earthTexture = texture;
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+        earthMaterial.map = texture;
+        earthMaterial.needsUpdate = true;
+        render();
+      },
+      undefined,
+      () => {
+        if (!disposed) {
+          mount.dataset.textureFallback = "true";
+          render();
+        }
+      },
+    );
+
+    // Faydalı: sürüşdürmək üçün pointer events
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+
+    const onMouseDown = () => { isDragging = true; };
+    const onMouseUp = () => { isDragging = false; };
+    const onMouseMove = (event: MouseEvent) => {
+      if (!isDragging) return;
+      const deltaMove = {
+        x: event.offsetX - previousMousePosition.x,
+        y: event.offsetY - previousMousePosition.y,
+      };
+      const rotateSpeed = 0.005;
+      const deltaQuaternion = new THREE.Quaternion()
+        .setFromEuler(new THREE.Euler(-deltaMove.y * rotateSpeed, -deltaMove.x * rotateSpeed, 0, "XYZ"));
+      globe.quaternion.premultiply(deltaQuaternion);
+      previousMousePosition = { x: event.offsetX, y: event.offsetY };
+    };
+
+    mount.addEventListener("mousedown", onMouseDown);
+    mount.addEventListener("mouseup", onMouseUp);
+    mount.addEventListener("mousemove", onMouseMove);
+    mount.addEventListener("mouseleave", onMouseUp);
+
+    previousMousePosition = { x: 0, y: 0 };
+
+    let animationFrame = 0;
+    const animate = () => {
+      controlsUpdate();
+      render();
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    function controlsUpdate() {
+      // nothing needed for manual controls
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
+      const width = Math.max(mount.clientWidth, 1);
+      const height = Math.max(mount.clientHeight, 1);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height, false);
+      render();
+    });
+    resizeObserver.observe(mount);
+    render();
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) animationFrame = window.requestAnimationFrame(animate);
+
     return () => {
-      observer.disconnect();
-      window.cancelAnimationFrame(frame);
+      disposed = true;
+      if (label) {
+        label.style.removeProperty("left");
+        label.style.removeProperty("top");
+        label.style.removeProperty("transform");
+        label.style.removeProperty("opacity");
+        label.style.removeProperty("transition");
+      }
+      mount.removeEventListener("mousedown", onMouseDown);
+      mount.removeEventListener("mouseup", onMouseUp);
+      mount.removeEventListener("mousemove", onMouseMove);
+      mount.removeEventListener("mouseleave", onMouseUp);
+      window.cancelAnimationFrame(animationFrame);
+      resizeObserver.disconnect();
+      earthTexture?.dispose();
+      earthGeometry.dispose();
+      earthMaterial.dispose();
+      atmosphereGeometry.dispose();
+      atmosphereMaterial.dispose();
+      pinCore.geometry.dispose();
+      (pinCore.material as THREE.Material).dispose();
+      haloTexture?.dispose();
+      haloMaterial?.dispose();
+      stars.geometry.dispose();
+      stars.material.dispose();
+      renderer.dispose();
+      renderer.domElement.remove();
     };
   }, []);
 
-  const onPointerDown = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    pointerRef.current = { x: event.clientX, y: event.clientY, active: true };
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-  const onPointerMove = (event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!pointerRef.current.active) return;
-    const dx = event.clientX - pointerRef.current.x;
-    rotationRef.current -= dx * 0.32;
-    pointerRef.current.x = event.clientX;
-  };
-  const stopDrag = () => { pointerRef.current.active = false; };
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="globe-canvas"
-      aria-label="Qarabağ fokusa alınmış, sürükləyərək fırladıla bilən demo 3D Yer kürəsi"
-      role="img"
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={stopDrag}
-      onPointerCancel={stopDrag}
-    />
+    <>
+      <div
+        ref={mountRef}
+        className="globe-canvas"
+        role="img"
+        aria-label="NASA Blue Marble teksturası, işıq-kölgə və Qarabağ göstəricisi olan interaktiv 3D Yer kürəsi; sürükləyərək fırladın"
+        aria-describedby="earth-texture-credit"
+      />
+      <span className="earth-credit" id="earth-texture-credit">NASA / GSFC SVS · Blue Marble</span>
+    </>
   );
 }

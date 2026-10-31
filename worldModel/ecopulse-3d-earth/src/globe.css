@@ -1,0 +1,122 @@
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; min-width: 320px; min-height: 100%; margin: 0; }
+body { min-height: 100vh; font-family: Inter, Manrope, Arial, sans-serif; }
+.earth-page {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 48%, rgba(30, 69, 89, .44) 0%, rgba(11, 24, 33, .38) 40%, transparent 67%),
+    radial-gradient(ellipse at 50% 100%, rgba(30, 54, 47, .30), transparent 55%),
+    #070e14;
+  color: #eef3ee;
+}
+.earth-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 11% 18%, rgba(237, 239, 219, .74) 50%, transparent 100%),
+    radial-gradient(1px 1px at 78% 23%, rgba(201, 221, 235, .58) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 35% 74%, rgba(237, 239, 219, .45) 50%, transparent 100%),
+    radial-gradient(1px 1px at 89% 68%, rgba(201, 221, 235, .52) 50%, transparent 100%),
+    radial-gradient(1px 1px at 62% 11%, rgba(237, 239, 219, .42) 50%, transparent 100%);
+  content: "";
+  opacity: .62;
+  pointer-events: none;
+}
+.earth-stage-wrap { width: min(94vw, 790px); text-align: center; }
+.globe-stage {
+  position: relative;
+  width: min(84vw, 680px);
+  height: min(84vw, 680px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.globe-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+.globe-canvas:active { cursor: grabbing; }
+.globe-canvas > canvas { display: block; width: 100%; height: 100%; }
+.globe-canvas[data-webgl-fallback="true"] {
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 29%, rgba(255,255,255,.18), transparent 38%), url("/assets/earth-blue-marble.jpg") center / cover;
+  box-shadow: inset -38px -4px 48px rgba(0,0,0,.42), 0 0 38px rgba(53,111,159,.18);
+}
+.globe-orbit {
+  position: absolute;
+  z-index: 0;
+  width: 105%;
+  height: 35%;
+  border: 1px solid rgba(183, 209, 218, .13);
+  border-radius: 50%;
+  transform: rotate(-31deg);
+  pointer-events: none;
+}
+.orbit-two { width: 91%; height: 50%; transform: rotate(52deg); border-style: dashed; opacity: .55; }
+.globe-tag {
+  position: absolute;
+  z-index: 2;
+  top: 47%;
+  left: 43%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255,255,255,.27);
+  border-radius: 24px;
+  color: #f7f0dc;
+  background: rgba(14, 40, 39, .88);
+  box-shadow: 0 5px 18px rgba(0,0,0,.23);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tag-pin { width: 7px; height: 7px; border-radius: 50%; background: #ffd47c; box-shadow: 0 0 12px rgba(255,212,124,.9); }
+.earth-credit {
+  position: absolute;
+  z-index: 2;
+  bottom: 2.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 9px;
+  border: 1px solid rgba(220, 234, 237, .12);
+  border-radius: 20px;
+  color: rgba(225, 232, 223, .76);
+  background: rgba(5, 13, 19, .64);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.rotation-hint {
+  margin: -8px 0 0;
+  color: rgba(221, 231, 226, .68);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.rotation-hint span { margin-right: 7px; color: #e6c274; font-size: 18px; vertical-align: -1px; }
+@media (max-width: 600px) {
+  .globe-stage { width: min(92vw, 430px); height: min(92vw, 430px); }
+  .earth-credit { bottom: 1.5%; font-size: 8px; }
+  .rotation-hint { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
+}

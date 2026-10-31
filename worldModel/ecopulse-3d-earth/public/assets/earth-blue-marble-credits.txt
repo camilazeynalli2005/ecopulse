@@ -1,0 +1,5 @@
+Earth texture: Equirectangular Projected Earth for “LARGEST” (NASA/Goddard Space Flight Center Scientific Visualization Studio, item 3615).
+Credit: NASA/Goddard Space Flight Center Scientific Visualization Studio. The Blue Marble Next Generation data is courtesy of Reto Stöckli (NASA/GSFC) and NASA Earth Observatory; cloud composite from the CPC Cloud Composite dataset.
+Source: https://svs.gsfc.nasa.gov/3615/
+NASA Blue Marble Next Generation: https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/
+The supplied equirectangular map is a static composite, not live Earth imagery.

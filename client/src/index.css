@@ -431,6 +431,81 @@ img, svg { display: block; }
 .team-credit { padding-top: 11px; color: #aebca9; font-family: var(--serif); font-size: 14.2px; font-style: italic; }
 
 .roadmap-section { padding-top: 100px; padding-bottom: 106px; display: grid; grid-template-columns: 45px 1fr; gap: 14px 25px; }
+
+/* === Globe3D (Three.js) Hero === */
+.globe-stage {
+  position: relative;
+  width: min(84vw, 680px);
+  height: min(84vw, 680px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.globe-canvas {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+.globe-canvas:active { cursor: grabbing; }
+.globe-canvas > canvas { display: block; width: 100%; height: 100%; }
+.globe-orbit {
+  position: absolute;
+  z-index: 0;
+  width: 105%;
+  height: 35%;
+  border: 1px solid rgba(183, 209, 218, .13);
+  border-radius: 50%;
+  transform: rotate(-31deg);
+  pointer-events: none;
+}
+.orbit-two { width: 91%; height: 50%; transform: rotate(52deg); border-style: dashed; opacity: .55; }
+.globe-tag {
+  position: absolute;
+  z-index: 2;
+  top: 47%;
+  left: 43%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255,255,255,.27);
+  border-radius: 24px;
+  color: #f7f0dc;
+  background: rgba(14, 40, 39, .88);
+  box-shadow: 0 5px 18px rgba(0,0,0,.23);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.tag-pin { width: 7px; height: 7px; border-radius: 50%; background: #ffd47c; box-shadow: 0 0 12px rgba(255,212,124,.9); }
+.earth-credit {
+  position: absolute;
+  z-index: 2;
+  bottom: 2.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 9px;
+  border: 1px solid rgba(220, 234, 237, .12);
+  border-radius: 20px;
+  color: rgba(225, 232, 223, .76);
+  background: rgba(5, 13, 19, .64);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .globe-stage { width: min(92vw, 430px); height: min(92vw, 430px); }
+  .earth-credit { bottom: 1.5%; font-size: 8px; }
+}
 .roadmap-heading { display: flex; align-items: end; justify-content: space-between; }
 .roadmap-heading .eyebrow { margin-bottom: 12px; }
 .roadmap-date { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; padding: 10px 12px; border: 1px solid #d8dccf; color: #8f7a48; }
