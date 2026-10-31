@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist/server",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmitOnError": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./client/src/*"],
+      "@shared/*": ["./shared/*"]
+    },
+    "types": ["node"]
+  },
+  "include": [
+    "server/_core/index.ts",
+    "server/_core/context.ts",
+    "server/_core/trpc.ts",
+    "server/_core/observationRouter.ts",
+    "server/_core/gradeRouter.ts",
+    "server/_core/leaderboardRouter.ts",
+    "server/_core/vite.ts",
+    "server/db.ts",
+    "server/routers.ts",
+    "shared/const.ts",
+    "shared/types.ts",
+    "shared/_core/errors.ts",
+    "drizzle/schema.ts",
+    "drizzle/relations.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "server/_core/vite.ts", "vite.config.ts"]
+}
