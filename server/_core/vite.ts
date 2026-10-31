@@ -7,8 +7,8 @@ import { createServer as createViteServer } from "vite";
 import viteConfig from "../../vite.config";
 
 // Qorunmatı static fayl servisi (production)
-// __dirname CJS bundle-də directory-nin özünü qaytarır
-const DIST_PUBLIC = path.resolve(__dirname, "../../dist/public");
+// process.cwd() Render/web serverdə project root-u qaytarir
+const DIST_PUBLIC = path.resolve(process.cwd(), "dist", "public");
 
 export function serveStatic(app: Express) {
   if (!fs.existsSync(DIST_PUBLIC)) {
