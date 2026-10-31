@@ -69,34 +69,64 @@ export const locations: EcoLocation[] = [
 
 export const quizQuestions = [
   {
-    question: "Peyk müşahidələri bizə nəyi müqayisə etməyə kömək edir?",
-    options: ["Yalnız şəhər adlarını", "Torpaq və bitki örtüyünün zamanla dəyişməsini", "Quşların dəqiq sayını"],
+    question: "Peyk sətonu (albedo) dəyişikliyində hansı faktor ən vahid təsir göstərir?",
+    options: ["Yer münaxəsini yanıq törənin rəngi", "Quşların gördiyi rənglər", "Yalnız gecə zamanının uzunluğu"],
+    answer: 0,
+    explanation: "Qara səthlər ısı cəzəsini yaxşı saxlayır, açıq səthlər isə günəş ışığını geri yansıtar.",
+  },
+  {
+    question: "Qarabağda meşə örtüyünün azalması hansı problemi artırır?",
+    options: ["Topraq süləməsinin oxunması", "Hava qanadının artması", "Quşların sayının artması"],
+    answer: 0,
+    explanation: "Meşə kökleri torpaqı tutur; örtük düşərkdə torpaq daha asan oxunur.",
+  },
+  {
+    question: "Su çevrəsində evapotranspirasiya nə deməkdir?",
+    options: ["Torpaqdan və bitkilərdən su buxarına çevrilməsi", "Yalnız dənizdən su buzlaşması", "Yalnız yerüstündə səməyin gebildetilməsi"],
+    answer: 0,
+    explanation: "Evapotranspirasiya = evaparlaşma (torpaq) + transpirasiya (bitkilər).",
+  },
+  {
+    question: "Hansı canlı bioindikator (ekosistem səhhliliyini göstərən göstəricidir)?",
+    options: ["Qaraqarça kurt", "Şəhərdə yaşayan koşkuş", "Mevsimlik çiçəklər"],
+    answer: 0,
+    explanation: "Qaraqarça kurt ekosistemin səhliliyini və gıda zincirini göstərə bilər.",
+  },
+  {
+    question: "Peyk sətonunda hansı rəng ən çox ısı cəzəsini saxlayır?",
+    options: ["Qara rəng", "Açıq rəng", "Yalnız mavi rəng"],
+    answer: 0,
+    explanation: "Qara rəng günəş ışığını əyçə ısıya çevirərək daha çox saxlayır.",
+  },
+  {
+    question: "Qarabağda yangın riskini artıran əsas faktor hansıdır?",
+    options: ["Quruqluq və qara torpaq", "Yalnız yağışın artması", "Yalnız quşların sayısı"],
+    answer: 0,
+    explanation: "Quruqluq bitkiləri quruqluşdurar və yanmaq asanlaşdırır.",
+  },
+  {
+    question: "Atmosferdə hansı iplikleva (gaz) ısı cəzəsini ən vahid saxlayır?",
+    options: ["Metan (CH₄)", "Azot (N₂)", "Yalnız oksigen (O₂)"],
+    answer: 0,
+    explanation: "Metan boughton gazı sifatində ısı cəzəsini yaxşı saxlayır və kliməyə təsir göstərir.",
+  },
+  {
+    question: "Qarabağ ekosistemində hansı faktor stationary (dövri)?",
+    options: ["Rəf-sənaye və inşaat", "Mövsümi yağış və dặk dövrü", "Yalnız şehərdəki trafik"],
     answer: 1,
-    explanation: "Eyni ərazinin fərqli tarixlərdəki görüntüləri dəyişiklikləri müşahidə etməyə imkan verir.",
+    explanation: "Mövsümi dəyişikliklər ekosistemdə stationary proses yaradırlar.",
   },
   {
-    question: "Meşə örtüyünün dəyişməsini öyrənərkən hansı ölçü faydalıdır?",
-    options: ["Bitki örtüyü indeksi", "Yol hərəkətinin sıxlığı", "Binaların mərtəbə sayı"],
+    question: "Su hövzusunun yoxalması hansı problemi götürür?",
+    options: ["Ekoton zonunun (su-sahil) azalması", "Yalnız quşların sayının artması", "Yalnız meşənin artması"],
     answer: 0,
-    explanation: "Bitki örtüyü göstəriciləri meşə və yaşıllıq dəyişikliklərini araşdırmağa kömək edir.",
+    explanation: "Su hövzəsi azalırsa su-sahil ekoton zonu daralır və biodiversitet azalır.",
   },
   {
-    question: "Su hövzəsi və yağıntı məlumatı hansı fənlərlə əlaqələnir?",
-    options: ["Coğrafiya və biologiya", "Yalnız musiqi", "Yalnız ədəbiyyat"],
+    question: "Ekoloji süstənlik (ecological footprint) nə deməkdir?",
+    options: ["İnsanın təbii resursları istifadə edilməsi və təbii qabiliyyətinin aşılması", "Yalnız çöp yerinə salınması", "Yalnız ağaç_BUFFER.cüterilməsi"],
     answer: 0,
-    explanation: "Su dövranı coğrafi şəraitə və canlıların yaşayış mühitinə təsir edir.",
-  },
-  {
-    question: "Yanğın xəbərdarlığını araşdırarkən ilk növbədə nə etmək lazımdır?",
-    options: ["Bir görüntüdən qəti nəticə çıxarmaq", "Tarixləri və əlavə məlumat mənbələrini müqayisə etmək", "Məlumatı yoxlamadan paylaşmaq"],
-    answer: 1,
-    explanation: "Məlumatın tarixini və mənbəyini tutuşdurmaq elmi nəticəni daha etibarlı edir.",
-  },
-  {
-    question: "Ekoloji müşahidəni elmi hekayəyə çevirmək üçün nə vacibdir?",
-    options: ["Müşahidəni sübut və izahla təqdim etmək", "Yalnız rənglərdən istifadə etmək", "Ölçmə tarixini gizlətmək"],
-    answer: 0,
-    explanation: "Müşahidə, mənbə və əsaslandırılmış nəticə bir-birini tamamlayır.",
+    explanation: "Ekologik süstənlik = insan təbii resursların tüketimi və təbii qabiliyyətinin məhdud olması.",
   },
 ];
 
