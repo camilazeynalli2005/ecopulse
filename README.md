@@ -14,3 +14,7 @@ React / Express / tRPC / Drizzleスター ✨ (frontend demo prototip).
 Ətraf trafikdən arındırılmış, yalnız EcoPulse frontend core-qalıntısı saxlanmışdır. Manus platforma xidmətlərindən (OAuth, Forge storage, bildiriş, Google Maps proxy, heartbeat, LLM,image generation, voice transcription) bütün əlaqələrایان koda və konfiqurasiya silinib.
 
 Backend auth-demo rejimində işləyir (real JWT sessiyası yoxdur). Veritabanı `DATABASE_URL` təyin olunmayıanda MySQL, əks hallədə bellek içi (in-memory) fallback işləyər.
+
+```
+cemile
+```
