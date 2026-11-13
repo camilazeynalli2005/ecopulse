@@ -1,4 +1,4 @@
-# EcoPulse — çıxış meyarları
+# QARABAĞIN YAŞIL İZİ — çıxış meyarları
 
 ## Azərbaycan dilli təqdimat frontend-i
 - [x] React/TypeScript frontend işlək olsun, mobil/desktop ölçülərə uyğunlaşsın və əsas bölmələrə naviqasiya versin.

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ecopulse
+    name: qarabaqin-yasili-izi
     env: node
     rootDir: .
     buildCommand: pnpm install && pnpm build

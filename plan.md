@@ -1,8 +1,8 @@
-# EcoPulse — işlək frontend üçün plan
+# QARABAĞIN YAŞIL İZİ — işlək frontend üçün plan
 
 ## Məqsəd və əhatə
 
-Azərbaycan dilində, NASA Space Apps Challenge 2026 (Gəncə) üçün təqdimat səviyyəsində görünən, şagird və tələbələrə yönəlmiş interaktiv EcoPulse prototipi hazırlanır. Bu buraxılış React/TypeScript layihəsində müştəri tərəfində işləyən demo olacaq; hesab sistemi, məlumat bazası, serverə tapşırıq göndərmə, canlı NASA GIBS/Earthdata məlumatı və studiya keyfiyyətli İbrahim bəy səs yazısı təchiz edilməyib. Xəritə göstəriciləri və müqayisə vizualları demo/maket məlumatı kimi açıq işarələnəcək; istifadəçi əsas qarşılıqlı axınları brauzerdə sınaya biləcək. Sonrakı inteqrasiyalar üçün UI sərhədləri aydın saxlanılacaq.
+Azərbaycan dilində, NASA Space Apps Challenge 2026 (Gəncə) üçün təqdimat səviyyəsində görünən, şagird və tələbələrə yönəlmiş interaktiv QARABAĞIN YAŞIL İZİ prototipi hazırlanır. Bu buraxılış React/TypeScript layihəsində müştəri tərəfində işləyən demo olacaq; hesab sistemi, məlumat bazası, serverə tapşırıq göndərmə, canlı NASA GIBS/Earthdata məlumatı və studiya keyfiyyətli İbrahim bəy səs yazısı təchiz edilməyib. Xəritə göstəriciləri və müqayisə vizualları demo/maket məlumatı kimi açıq işarələnəcək; istifadəçi əsas qarşılıqlı axınları brauzerdə sınaya biləcək. Sonrakı inteqrasiyalar üçün UI sərhədləri aydın saxlanılacaq.
 
 ## İcra yanaşması
 
@@ -22,7 +22,7 @@ client/src/
   components/ecopulse/           Naviqasiya, hero, qlobus, xəritə, sürgü, səs,
                                  laboratoriya, quiz, sertifikat, liderlər, komanda
   data/ecopulse.ts               Məkanlar, demo metrikaları, quiz və komanda məzmunu
-  index.css                      EcoPulse dizayn tokenləri, responsive və motion qaydaları
+  index.css                      QARABAĞIN YAŞIL İZİ dizayn tokenləri, responsive və motion qaydaları
 public/logo.svg                    Əsas loqo faylı
 plan.md                          Təsdiqlənmiş icra və dizayn planı
 TODO.md                          Təsdiqdən sonra yaradılacaq çıxış meyarları
@@ -42,7 +42,7 @@ TODO.md                          Təsdiqdən sonra yaradılacaq çıxış meyarl
 - **Tipoqrafiya:** Başlıqlarda `DM Serif Display`, interfeys və bədən mətnində `Manrope` (yükləmə mümkün olmazsa serif/system sans-serif ehtiyatı); böyük başlıqlar və ölçü vahidləri güclü iyerarxiya yaradır.
 - **Brend mahiyyəti:** Qarabağın dəyişən ekosistemini şagird və tələbələr üçün xəritə, məlumat və səs hekayəsində birləşdirən tədris platforması; **araşdırıcı, qayğıkeş, aydın**.
 - **Brend səsi:** Dəqiq, dəvətkar, elmi marağı təşviq edən. Nümunə: “Qarabağın nəbzini xəritədə izlə.” / “Müşahidə et. Müqayisə et. Öz hekayəni danış.”
-- **Loqo/wordmark:** Sadə konsentrik konturlardan yaranan yarpaq+nəbz nişanı və ayrıca EcoPulse söz nişanı.
+- **Loqo/wordmark:** Sadə konsentrik konturlardan yaranan yarpaq+nəbz nişanı və ayrıca QARABAĞIN YAŞIL İZİ söz nişanı.
 - **İmza brend rəngi:** Dərin şam yaşılı.
 
 ## Məhdudiyyətlər

@@ -1,4 +1,4 @@
-# EcoPulse — Qarabağın ekoloji nəbzi
+# QARABAĞIN YAŞIL İZİ
 
 NASA Space Apps Challenge 2026 (Gəncə) üçün şagird və tələbələrə yönəlmiş interaktiv ekoloji təlim prototipi.
 
@@ -11,7 +11,7 @@ React / Express / tRPC / Drizzleスター ✨ (frontend demo prototip).
 
 ## Hesabat
 
-Ətraf trafikdən arındırılmış, yalnız EcoPulse frontend core-qalıntısı saxlanmışdır. Manus platforma xidmətlərindən (OAuth, Forge storage, bildiriş, Google Maps proxy, heartbeat, LLM,image generation, voice transcription) bütün əlaqələrایان koda və konfiqurasiya silinib.
+Ətraf trafikdən arındırılmış, yalnız QARABAĞIN YAŞIL İZİ frontend core-qalıntısı saxlanmışdır. Manus platforma xidmətlərindən (OAuth, Forge storage, bildiriş, Google Maps proxy, heartbeat, LLM,image generation, voice transcription) bütün əlaqələrایان koda və konfiqurasiya silinib.
 
 Backend auth-demo rejimində işləyir (real JWT sessiyası yoxdur). Veritabanı `DATABASE_URL` təyin olunmayıanda MySQL, əks hallədə bellek içi (in-memory) fallback işləyər.
 

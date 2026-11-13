@@ -10,7 +10,7 @@ type HeaderProps = {
 const navItems = [
   { href: "/ekonbez", label: "Eko-nəbz" },
   { href: "/laboratoriya", label: "Laboratoriya" },
-  { href: "/oyun", label: "Eco-Quiz" },
+  { href: "/oyun", label: "Yaşıl İz" },
   { href: "/layihe", label: "Layihə" },
 ];
 
@@ -52,9 +52,9 @@ export default function Header({ onExplore }: HeaderProps) {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Link href="/" className="brand" aria-label="EcoPulse ana səhifə">
+        <Link href="/" className="brand" aria-label="QARABAĞIN YAŞIL İZİ ana səhifə">
           <img src="/logo.svg" alt="" width="40" height="40" />
-          <span className="brand-name">eco<span>pulse</span><small>QARABAĞIN EKOLOJİK NƏBZİ</small></span>
+          <span className="brand-name">yaşıl<span>iz</span><small>QARABAĞIN YAŞIL İZİ</small></span>
         </Link>
         <nav className={`main-nav ${menuOpen ? "mobile-open" : ""}`} aria-label="Əsas naviqasiya">
           {navItems.map((item) => (

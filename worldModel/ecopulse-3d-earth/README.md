@@ -1,6 +1,6 @@
-# EcoPulse — yalnızca 3D Dünya
+# QARABAĞIN YAŞIL İZİ — yalnızca 3D Dünya
 
-Bu paket **yalnızca interaktif 3D Dünya bileşenini**, çalıştırmak için gereken minimal React/Vite dosyalarını ve NASA Blue Marble tekstürünü içerir. EcoPulse sitesinin diğer bölümleri pakete dahil değildir.
+Bu paket **yalnızca interaktif 3D Dünya bileşenini**, çalıştırmak için gereken minimal React/Vite dosyalarını ve NASA Blue Marble tekstürünü içerir. QARABAĞIN YAŞIL İZİ saytının digər bölümleri pakete dahil değildir.
 
 ## Çalıştırma
 

@@ -10,7 +10,7 @@ function Hero({ onExplore }: { onExplore: () => void }) {
       <div className="hero-inner page-width">
         <div className="hero-copy">
           <div className="eyebrow hero-eyebrow"><span className="eyebrow-dot" /> NASA SPACE APPS CHALLENGE · GƏNCƏ 2026</div>
-          <h1>Qarabağın<br /><em>ekoloji</em> nəbzi<span className="hero-period">.</span></h1>
+          <h1>QARABAĞIN<br /><em>yaşıl</em> izi<span className="hero-period">.</span></h1>
           <p className="hero-subtitle">İnteraktiv ekoloji məlumat və səsli tədris platforması</p>
           <p className="hero-description">Məlumatı kəşfə, kəşfi isə gələcəyin hekayəsinə çevir. Qarabağın dəyişən təbiətini gənc tədqiqatçılarla birlikdə araşdır.</p>
           <div className="hero-actions">
@@ -36,7 +36,7 @@ function IntroSection() {
     <section className="intro-section page-width" id="nece-isleyir">
       <div className="section-marker"><span>01</span><i /></div>
       <div className="intro-headline"><span className="eyebrow">MƏLUMATDAN MƏNA YARAT</span><h2>Rəqəmləri deyil,<br /><em>dəyişimi</em> gör.</h2></div>
-      <div className="intro-copy"><p>Ekoloji məlumat böyük görünə bilər. EcoPulse onu xəritəyə, müşahidəyə və yadda qalan səs hekayasına çevirir — beləliklə, təbiətdəki dəyişikliklər hər kəs üçün daha anlaşıqlı olur.</p><a href="/ekonbez" className="text-link">Necə işlədiyini kəşf et <ArrowDownRight size={15} /></a></div>
+      <div className="intro-copy"><p>Ekoloji məlumat böyük görünə bilər. QARABAĞIN YAŞIL İZİ onu xəritəyə, müşahidəyə və yadda qalan səs hekayasına çevirir — beləliklə, təbiətdəki dəyişikliklər hər kəs üçün daha anlaşıqlı olur.</p><a href="/ekonbez" className="text-link">Necə işlədiyini kəşf et <ArrowDownRight size={15} /></a></div>
       <div className="steps-row">
         <article className="step-card"><span className="step-no">01 / GÖR</span><div className="step-icon step-icon-earth"><Satellite size={21} /></div><h3>Yuxarıdan bax</h3><p>Peyk vizuallarında meşə, su və ərazi izlərini müşahidə et.</p><span className="step-line" /></article>
         <article className="step-card"><span className="step-no">02 / MÜQAYİSƏ ET</span><div className="step-icon step-icon-water"><Activity size={21} /></div><h3>Dəyişimi izlə</h3><p>Vaxt sürgüsü ilə eyni məkanın iki dövrünü yanaşı araşdır.</p><span className="step-line" /></article>

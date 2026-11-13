@@ -1,1 +1,1 @@
-export default { name: "ecopulse" };
+export default { name: "qarabaqin-yasili-izi" };
