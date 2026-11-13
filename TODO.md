@@ -30,7 +30,7 @@
 - [x] Mərhələ 1 (14–15 noyabr 2026) üçün demo UI üç məkanı, müqayisə sürgüsünü, səsli hekayə pleyerini, 5 suallıq Eco-Quiz-i və sertifikat dizaynını təqdim edir.
 - [ ] Mərhələ 1-in tam texniki hədəfləri — CesiumJS-də üç məkan və hər məkan üzrə real peyk arxiv müqayisəsi, eləcə də İbrahim bəyin səsləndirdiyi nümunəvi səsli hekayə — canlı inteqrasiya və təqdim ediləcək media faylları ilə tamamlanmalıdır.
 - [ ] Mərhələ 2 (MVP – 1700 AZN) üçün tapşırıqların serverə göndərilməsi və müəllim qiymətləndirməsinin yadda saxlanması/idarə olunması ayrıca backend işi kimi tamamlanmalıdır; hazır UI bu məlumatları yalnız demo sessiyasında saxlayır.
-- [ ] Mərhələ 3 (6 ay, 55000 AZN texniki büdcə): NASA GIBS/Earthdata canlı avtomatlaşdırılmış inteqrasiyası, 35 nəfərlik pilot qrup (20 şagird, 15 tələbə) üçün şəxsi kabinetlər və komanda paylaşımı qurulmalıdır. Bu imkanlar hazırkı prototipdə mövcud deyil.
+- [ ] Mərhələ 3 (6 ay, 30000 AZN texniki büdcə): NASA GIBS/Earthdata canlı avtomatlaşdırılmış inteqrasiyası, 35 nəfərlik pilot qrup (20 şagird, 15 tələbə) üçün şəxsi kabinetlər və komanda paylaşımı qurulmalıdır. Bu imkanlar hazırkı prototipdə mövcud deyil.
 
 ## Gələcək canlı xidmət inteqrasiyası
 - [ ] NASA GIBS API ilə peyk qatlarının canlı/arxiv xəritə qatları, NASA Earthdata & Giovanni ilə temperatur/rütubət/yanğın statistikalarının avtomatlaşdırılmış qoşulması ayrıca mərhələdə qurulmalıdır.
